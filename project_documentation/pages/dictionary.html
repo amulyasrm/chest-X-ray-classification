@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Dictionary | AI Chest X-ray Research</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+
+<body>
+    <nav>
+        <div class="container nav-content">
+            <div class="logo">MED-AI RESEARCH</div>
+            <div class="nav-links">
+                <a href="../index.html">Overview</a>
+                <a href="pipelines.html">Pipelines</a>
+                <a href="results.html">Results</a>
+                <a href="dictionary.html" class="active">Dictionary</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" style="padding-top: 120px;">
+        <h1 class="animate">Technical <span class="gradient-text">Dictionary</span></h1>
+
+        <section class="animate"
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem;">
+            <div class="card">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">Swin Transformer</h3>
+                <p style="font-size: 0.95rem; color: var(--text-muted); text-align: justify;">
+                    A state-of-the-art hierarchical Vision Transformer (ViT) that uses shifted windows to compute
+                    self-attention.
+                    Unlike traditional Transformers that process the whole image globally, Swin processes images in
+                    local windows,
+                    making it computationally efficient while still capturing global context through hierarchical
+                    merging.
+                    This hierarchical structure allows it to detect diseases at multiple scales, from large shadows to
+                    small nodules.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3 style="color: var(--secondary); margin-bottom: 1rem;">Spatial Attention</h3>
+                <p style="font-size: 0.95rem; color: var(--text-muted); text-align: justify;">
+                    A mechanism that allows the model to "focus" on specific geographical regions within an image.
+                    It highlights the most informative spatial locations (like the lung regions in a chest X-ray) while
+                    suppressing irrelevant background noise, effectively improving the signal-to-noise ratio in feature
+                    extraction.
+                    In our hybrid model, it acts as a filter that directs the CNN's attention to the most likely
+                    pathology sites.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3 style="color: #a855f7; margin-bottom: 1rem;">CLAHE (Preprocessing)</h3>
+                <p style="font-size: 0.95rem; color: var(--text-muted); text-align: justify;">
+                    Contrast Limited Adaptive Histogram Equalization is a sophisticated image preprocessing technique
+                    used to
+                    improve local contrast. Unlike global histogram equalization, CLAHE operates in small regions
+                    (tiles) to
+                    prevent the over-amplification of noise, ensuring that subtle details like nodules or pleural
+                    thickening
+                    are clearly visible to the AI, even in poor quality X-ray scans.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">BCE Loss</h3>
+                <p style="font-size: 0.95rem; color: var(--text-muted); text-align: justify;">
+                    Binary Cross Entropy is the gold standard loss function for multi-label classification. It measures
+                    the
+                    performance of a classification model whose output is a probability value between 0 and 1. In our
+                    project,
+                    it treats each of the 14 pathological findings as independent tasks, ensuring that learning one
+                    disease
+                    doesn't negatively interfere with the identification of another.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3 style="color: var(--secondary); margin-bottom: 1rem;">DenseNet121</h3>
+                <p style="font-size: 0.95rem; color: var(--text-muted); text-align: justify;">
+                    A specialized CNN architecture where each layer is connected to every other layer in a dense block.
+                    This pattern addresses the vanishing-gradient problem and encourages feature reuse.
+                    Densenet is exceptionally well-suited for medical imaging because it extracts rich features while
+                    maintaining a relatively low parameter count, which helps prevent overfitting on clinical datasets.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3 style="color: #a855f7; margin-bottom: 1rem;">Feature Fusion</h3>
+                <p style="font-size: 0.95rem; color: var(--text-muted); text-align: justify;">
+                    The process of combining distinct types of information into a single representative vector.
+                    In our research, we fuse local features (textures/edges) from the CNN branch with global features
+                    (structural context) from the Swin branch. By concatenating these distinct "views", the model gains
+                    a holistic understanding of the patient's condition that neither branch could achieve alone.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Med-AI Research Group. Education through Expertise.</p>
+    </footer>
+</body>
+
+</html>

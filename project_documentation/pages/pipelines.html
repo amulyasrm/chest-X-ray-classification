@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Pipelines | AI Chest X-ray Research</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+</head>
+
+<body>
+    <nav>
+        <div class="container nav-content">
+            <div class="logo">MED-AI RESEARCH</div>
+            <div class="nav-links">
+                <a href="../index.html">Overview</a>
+                <a href="pipelines.html" class="active">Pipelines</a>
+                <a href="results.html">Results</a>
+                <a href="dictionary.html">Dictionary</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" style="padding-top: 120px;">
+        <h1 class="animate">Evolution of <span class="gradient-text">Architectures</span></h1>
+
+        <!-- Data Preprocessing Module -->
+        <section class="card animate" style="animation-delay: 0.1s;">
+            <h2 style="color: var(--secondary); margin-bottom: 1rem;">Core Preprocessing Pipeline</h2>
+            <p style="margin-bottom: 2rem;">Before images reach the model, they undergo a specialized medical imaging
+                enhancement pipeline to normalize lighting and contrast across various X-ray machines.</p>
+            <div class="mermaid">
+                graph LR
+                Raw[Raw Grayscale X-ray] --> CLAHE[Adaptive Contrast (CLAHE)]
+                CLAHE --> Resize[Resolution Scaling: 384x384]
+                Resize --> RGB[Grayscale to RGB Mapping]
+                RGB --> Norm[ImageNet Mean/Std Normalization]
+                Norm --> Aug[Augmentation: Rotation + Flip + Color Jitter]
+                Aug --> Batch[Tensor Batching]
+            </div>
+        </section>
+
+        <!-- Phase 1: Baseline -->
+        <section class="card animate" style="animation-delay: 0.2s;">
+            <h2>Phase 1: Baseline (CheXNet 224)</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;">
+                <div>
+                    <p style="margin-bottom: 1rem;">The benchmark model. Follows the original Stanford CheXNet research,
+                        utilizing a standard DenseNet121 encoder.</p>
+                    <ul style="color: var(--text-muted); font-size: 0.9rem; margin-left: 1.5rem;">
+                        <li>Encoder: DenseNet121</li>
+                        <li>Resolution: 224x224px</li>
+                        <li>Parameters: ~7M</li>
+                        <li>Loss: BCEWithLogitsLoss</li>
+                    </ul>
+                </div>
+                <div class="mermaid">
+                    graph TD
+                    CNN[DenseNet121] --> GAP[Global Avg Pool]
+                    GAP --> FC[Linear 15]
+                </div>
+            </div>
+        </section>
+
+        <!-- Hybrid Architecture Deep Dive -->
+        <section class="card animate" style="animation-delay: 0.3s; border: 1px solid var(--primary);">
+            <h2 class="gradient-text">Hybrid Deep Dive: CNN-Transformer Fusion</h2>
+            <p style="margin-bottom: 2rem;">The core novelty of our research. A parallel-stream architecture that
+                captures both <strong>Texture</strong> (CNN) and <strong>Context</strong> (Transformer).</p>
+            <div class="mermaid">
+                graph TD
+                Input[Augmented Image 384x384] --> Stream1[Stream A: CNN Branch]
+                Input --> Stream2[Stream B: ViT Branch]
+
+                subgraph "Stream A (Local Features)"
+                Stream1 --> Dブロック[DenseNet-121 Features]
+                Dブロック --> Attention[Spatial Attention Layer]
+                Attention --> Conv1x1[1x1 Filter Conv]
+                end
+
+                subgraph "Stream B (Global Context)"
+                Stream2 --> Swin[Swin Transformer Tiny]
+                Swin --> PatchMerge[Patch Merging Layers]
+                end
+
+                Conv1x1 --> Fusion[Concatenation Neck]
+                PatchMerge --> Fusion
+
+                Fusion --> FC1[Fully Connected 512]
+                FC1 --> ReLU[ReLU Activation]
+                ReLU --> Drop[Dropout 20%]
+                Drop --> Final[Classifier 15 Classes]
+
+                style Stream1 fill:rgba(99, 102, 241, 0.1),stroke:#6366f1
+                style Stream2 fill:rgba(236, 72, 153, 0.1),stroke:#ec4899
+                style Fusion fill:rgba(168, 85, 247, 0.2),stroke:#a855f7
+            </div>
+        </section>
+
+        <!-- Phase 4 Details -->
+        <section class="card animate" style="animation-delay: 0.4s;">
+            <h2>Phase 4: Optimization Strategy</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div class="card" style="background: rgba(255,255,255,0.05); padding: 1.5rem;">
+                    <h4 style="color: var(--secondary); margin-bottom: 0.5rem;">Training Hyperparameters</h4>
+                    <table style="font-size: 0.85rem;">
+                        <tr>
+                            <td>Optimizer</td>
+                            <td>AdamW (Decoupled Weight Decay)</td>
+                        </tr>
+                        <tr>
+                            <td>Learning Rate</td>
+                            <td>1e-4</td>
+                        </tr>
+                        <tr>
+                            <td>Scheduler</td>
+                            <td>Cosine Annealing (Cycle=10)</td>
+                        </tr>
+                        <tr>
+                            <td>Batch Size</td>
+                            <td>8 (Optimized for 384px)</td>
+                        </tr>
+                        <tr>
+                            <td>Epochs</td>
+                            <td>10 (Early Stopped)</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="card" style="background: rgba(255,255,255,0.05); padding: 1.5rem;">
+                    <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Experimental Logic</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">
+                        Phase 4 optimized the <strong>Data Integrity</strong> layer. We discovered that standard random
+                        splitting was causing 'Patient Leakage'.
+                        The new pipeline uses mandatory <strong>Patient-wise splitting</strong>, ensuring the model
+                        generalizes to new patients rather than memorizing individual X-ray machine artifacts.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Med-AI Research Group. Engineering Precision.</p>
+    </footer>
+</body>
+
+</html>

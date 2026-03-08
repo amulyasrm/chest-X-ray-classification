@@ -1,0 +1,28 @@
+Analysis of 10k Subset
+======================
+Total Images: 10000
+Total Unique Labels: 15
+
+Label Counts:
+No Finding            5694
+Infiltration          1539
+Effusion              1064
+Atelectasis            976
+Nodule                 491
+Mass                   448
+Pneumothorax           400
+Consolidation          382
+Cardiomegaly           284
+Pleural_Thickening     258
+Fibrosis               194
+Emphysema              193
+Edema                  182
+Pneumonia              134
+Hernia                  31
+
+Top 5 Labels:
+No Finding      5694
+Infiltration    1539
+Effusion        1064
+Atelectasis      976
+Nodule           491
