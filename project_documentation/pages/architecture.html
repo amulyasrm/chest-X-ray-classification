@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Model Architecture | Med-AI Education</title>
+    <title>Architecture Evolution | Med-AI Education</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -21,7 +21,7 @@
                 <a href="../index.html">Home</a>
                 <a href="problem.html">The Challenge</a>
                 <a href="basics.html">How AI Works</a>
-                <a href="architecture.html" class="active">Our Model</a>
+                <a href="architecture.html" class="active">Pipelines</a>
                 <a href="training.html">The Process</a>
                 <a href="results.html">Results</a>
                 <a href="future.html">Future</a>
@@ -30,91 +30,207 @@
     </nav>
 
     <main class="container" style="padding-top: 120px;">
-        <h1 class="animate">Inside the <span class="gradient-text">Hybrid Brain</span></h1>
+        <h1 class="animate">The 4 Stages of <span class="gradient-text">Innovation</span></h1>
+        <p
+            style="margin-bottom: 3rem; color: var(--text-muted); text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
+            Our research journey wasn't a straight line. We evolved through four distinct pipelines, each one building
+            on the failures and successes of the last.
+        </p>
 
-        <!-- Architecture Overview -->
+        <!-- Pipeline 1 -->
         <section class="card animate" style="animation-delay: 0.1s;">
-            <h2>The Workflow 🧬</h2>
-            <p>Here is exactly what happens once you upload an X-ray image to our system:</p>
-            <div class="mermaid">
-                graph TD
-                A[Start: Raw X-ray] --> B[1. CLAHE: Brightness Check]
-                B --> C[2. Resize: High Resolution]
-                C --> D1[3A. CNN: Texture Expert]
-                C --> D2[3B. Swin ViT: Global Expert]
-                D1 --> E[4. Attention: Focus Filter]
-                E --> F[5. Fusion: Combining Experts]
-                D2 --> F
-                F --> G[End: Disease Prediction]
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2>Pipeline 1: The Standard Baseline</h2>
+                <span class="badge"
+                    style="background: rgba(148, 163, 184, 0.2); border-color: #94a3b8; color: #94a3b8;">Legacy
+                    Phase</span>
             </div>
-        </section>
-
-        <!-- Components Breakdown -->
-        <section class="card animate" style="animation-delay: 0.3s;">
-            <h2>Step-by-Step Components</h2>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
-                <div class="card" style="background: rgba(255,255,255,0.05);">
-                    <h3>1. CLAHE Preprocessing 🔦</h3>
-                    <p style="font-size: 0.9rem;">
-                        <strong>What it is:</strong> A digital "Contrast" filter.
-                        <br>
-                        <strong>Why we use it:</strong> Some X-rays are dark or blurry. CLAHE makes the faint details
-                        (like small shadows) stand out clearly so the AI doesn't miss them.
-                    </p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div>
+                    <h3>Setup & Goal</h3>
+                    <p>We started with <strong>CheXNet</strong>, the industry standard. It uses a
+                        <strong>DenseNet121</strong> architecture which is very good at sharing information between its
+                        "brain cells" (layers).</p>
+                    <ul style="margin-top: 1rem; margin-left: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">
+                        <li><strong>Resolution:</strong> 224x224 (Standard)</li>
+                        <li><strong>Loss Function:</strong> Standard BCE</li>
+                        <li><strong>Strategy:</strong> Pure CNN approach.</li>
+                    </ul>
+                    <div class="analogy" style="margin-top: 1.5rem;">
+                        <label>The Result</label>
+                        <strong>Macro AUC: 0.843</strong>. <br>
+                        It was good, but it missed small features (like tiny nodules) because the image was too small
+                        and blurred.
+                    </div>
                 </div>
-
-                <div class="card" style="background: rgba(255,255,255,0.05);">
-                    <h3>2. DenseNet CNN 🧬</h3>
-                    <p style="font-size: 0.9rem;">
-                        <strong>What it is:</strong> A very deep traditional AI eye.
-                        <br>
-                        <strong>Why we use it:</strong> It's been proven for years to be the best at finding patterns in
-                        medical images. We use it to extract "local" features.
-                    </p>
-                </div>
-
-                <div class="card" style="background: rgba(255,255,255,0.05);">
-                    <h3>3. Swin Transformer 🌐</h3>
-                    <p style="font-size: 0.9rem;">
-                        <strong>What it is:</strong> A modern Transformer that looks at the whole image.
-                        <br>
-                        <strong>Why we use it:</strong> It understands "Context." For example, it knows where the heart
-                        is versus the lungs, helping it categorize diseases more scientifically.
-                    </p>
-                </div>
-
-                <div class="card" style="background: rgba(255,255,255,0.05);">
-                    <h3>4. Spatial Attention 🔦</h3>
-                    <p style="font-size: 0.9rem;">
-                        <strong>What it is:</strong> A digital flashlight that points to lung regions.
-                        <br>
-                        <strong>Why we use it:</strong> It tells the CNN: "Hey, focus on the lungs, ignore the
-                        background noise!" This makes the AI much more accurate.
-                    </p>
+                <div class="visual-box">
+                    <div class="mermaid">
+                        graph TD
+                        In[X-ray 224px] --> CNN[DenseNet121]
+                        CNN --> Pool[Global Pool]
+                        Pool --> Out[15 Disease Preds]
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Fusion Explanation -->
-        <section class="card animate" style="animation-delay: 0.5s;">
-            <h2>Feature Fusion: The Final Verdict 🤝</h2>
-            <p>
-                Think of <strong>Feature Fusion</strong> as a consultation between two expert doctors.
-                <br><br>
-                <strong>Doctor A (CNN)</strong> says: "I see a very specific rough texture here."
-                <br>
-                <strong>Doctor B (Transformer)</strong> says: "Based on the whole lung shape, that texture is likely an
-                infection."
-                <br><br>
-                By <strong>fusing</strong> (connecting) their opinions, our model makes a final, smarter decision on
-                whether a disease is present.
-            </p>
+        <!-- Pipeline 2 -->
+        <section class="card animate" style="animation-delay: 0.2s; border: 1px solid var(--primary);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2>Pipeline 2: The Hybrid Leap</h2>
+                <span class="badge">Innovation Phase</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div>
+                    <h3>The Upgrade ⚡</h3>
+                    <p>We introduced the <strong>CNN-Transformer Hybrid</strong>. We realized a CNN is like a microscope
+                        (sees textures), but a Transformer is like a map (sees locations). We combined them.</p>
+                    <ul style="margin-top: 1rem; margin-left: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">
+                        <li><strong>Upgrade:</strong> Added Swin Transformer branch.</li>
+                        <li><strong>Feature:</strong> Spatial Attention (Flashlight focus).</li>
+                        <li><strong>Experiment:</strong> Tested Focal Loss to handle rare diseases.</li>
+                    </ul>
+                    <div class="analogy" style="margin-top: 1.5rem;">
+                        <label>The Result</label>
+                        <strong>Macro AUC: 0.866</strong>. <br>
+                        A massive jump! The AI started understanding the "context" of where diseases sit in the lungs.
+                    </div>
+                </div>
+                <div class="visual-box">
+                    <div class="mermaid">
+                        graph TD
+                        In[224px] --> CNN[CNN Branch]
+                        In --> Trans[Swin Branch]
+                        CNN --> Att[Attention]
+                        Att --> Fuse[Fusion]
+                        Trans --> Fuse
+                        Fuse --> Out[Predictions]
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pipeline 3 -->
+        <section class="card animate" style="animation-delay: 0.3s; border: 1px solid var(--secondary);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2>Pipeline 3: The High-Resolution Vision</h2>
+                <span class="badge"
+                    style="background: rgba(236, 72, 153, 0.2); border-color: var(--secondary); color: var(--secondary);">Definition
+                    Phase</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div>
+                    <h3>The Upgrade ⚡</h3>
+                    <p>Resolution matters. In medical imaging, zooming in can save lives. We scaled everything from
+                        224px to <strong>384x384px</strong>.</p>
+                    <ul style="margin-top: 1rem; margin-left: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">
+                        <li><strong>Upgrade:</strong> 3x more pixels than Pipeline 2.</li>
+                        <li><strong>Feature:</strong> Swin Window-12 Scaling to handle larger patches.</li>
+                        <li><strong>Benefit:</strong> Tiny diseases (Nodules) became visible to the AI.</li>
+                    </ul>
+                    <div class="analogy" style="margin-top: 1.5rem;">
+                        <label>The Result</label>
+                        <strong>Macro AUC: 0.869</strong>. <br>
+                        Precision improved, but we noticed a "Data Leakage" problem where the AI was memorizing certain
+                        patients.
+                    </div>
+                </div>
+                <div class="visual-box">
+                    <div class="mermaid">
+                        graph TD
+                        In3[384px HD] --> H[Hybrid Model]
+                        H --> FL[Focal Loss]
+                        FL --> Score[High Precision Score]
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pipeline 4 -->
+        <section class="card animate"
+            style="animation-delay: 0.4s; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%); border: 2px solid var(--primary);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2>Pipeline 4: Optimized Mastery (Final)</h2>
+                <span class="badge" style="background: var(--accent-gradient); color: white; border: none;">Gold
+                    Standard 🏆</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div>
+                    <h3>The Final Upgrade ⚡</h3>
+                    <p>We fixed the data integrity. We implemented <strong>Patient-wise Splitting</strong>—ensuring the
+                        AI never sees the same person in training and testing. We also stabilized the math using
+                        optimized BCE loss.</p>
+                    <ul style="margin-top: 1rem; margin-left: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">
+                        <li><strong>Final Fix:</strong> No Patient Leakage allowed.</li>
+                        <li><strong>Final Loss:</strong> Optimized BCEWithLogits.</li>
+                        <li><strong>Efficiency:</strong> MPS Memory Caching for fast inference.</li>
+                    </ul>
+                    <div class="analogy" style="border-color: var(--primary); background: rgba(99, 102, 241, 0.1);">
+                        <label style="color: var(--primary);">THE FINAL VERDICT</label>
+                        <strong style="color: white; font-size: 1.5rem;">Macro AUC: 0.884</strong> <br>
+                        This is our most trustworthy and accurate model to date.
+                    </div>
+                </div>
+                <div class="visual-box">
+                    <div class="mermaid">
+                        graph TD
+                        Data[Clean Patient-wise Data] --> Pre[CLAHE HD]
+                        Pre --> Final[Hybrid Brain 384]
+                        Final --> Stable[BCE Loss Optimization]
+                        Stable --> Victory[0.884 AUC Score]
+
+                        style Victory fill:#6366f1,stroke:#fff,color:#fff
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Comparison Summary -->
+        <section class="card animate" style="animation-delay: 0.5s; text-align: center;">
+            <h2>Growth Summary</h2>
+            <div class="table-container">
+                <table style="text-align: center;">
+                    <thead>
+                        <tr>
+                            <th>Pipeline Stage</th>
+                            <th>Complexity</th>
+                            <th>Resolution</th>
+                            <th>Result (AUC)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Stage 1: Baseline</td>
+                            <td>Simple CNN</td>
+                            <td>224</td>
+                            <td>0.843</td>
+                        </tr>
+                        <tr>
+                            <td>Stage 2: Hybrid Base</td>
+                            <td>Architecture Fusion</td>
+                            <td>224</td>
+                            <td>0.866</td>
+                        </tr>
+                        <tr>
+                            <td>Stage 3: High-Res Hybrid</td>
+                            <td>Visual Scaling</td>
+                            <td>384</td>
+                            <td>0.869</td>
+                        </tr>
+                        <tr style="background: rgba(99, 102, 241, 0.1); font-weight: bold; color: var(--primary);">
+                            <td>Stage 4: Optimized Final</td>
+                            <td>Stability & Integrity</td>
+                            <td>384</td>
+                            <td>0.884</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2026 Med-AI Education Project. Complexity made Simple.</p>
+        <p>&copy; 2026 Med-AI Education Project. Four Phases of Perfection.</p>
     </footer>
 </body>
 
