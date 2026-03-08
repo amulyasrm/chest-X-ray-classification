@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Results & Visualization | Med-AI Education</title>
+    <title>Detailed Results | Med-AI Education</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -19,7 +20,7 @@
                 <a href="../index.html">Home</a>
                 <a href="problem.html">The Challenge</a>
                 <a href="basics.html">How AI Works</a>
-                <a href="architecture.html">Our Model</a>
+                <a href="architecture.html">Pipelines</a>
                 <a href="training.html">The Process</a>
                 <a href="results.html" class="active">Results</a>
                 <a href="future.html">Future</a>
@@ -28,84 +29,190 @@
     </nav>
 
     <main class="container" style="padding-top: 120px;">
-        <h1 class="animate">The <span class="gradient-text">Results Report</span></h1>
+        <h1 class="animate">Detailed <span class="gradient-text">Performance Analysis</span></h1>
 
-        <!-- Results Table -->
+        <!-- High Level Summary -->
         <section class="card animate" style="animation-delay: 0.1s;">
-            <h2>Performance Benchmark 📈</h2>
-            <p>How do we know our AI is actually "smart"? We use a score called <strong>AUC</strong>.
-                <br>
-                A 1.0 is a perfect score (like a psychic model), and a 0.5 is like guessing with a coin flip.
-            </p>
+            <h2>Model Comparison: Macro Metrics 📊</h2>
+            <p style="margin-bottom: 2rem;">Comparison of our four experimental phases using Macro-Averaged metrics
+                across all 14 disease classes.</p>
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>Model</th>
-                            <th>Macro AUC (Mean Score)</th>
-                            <th>Reliability Status</th>
+                            <th>Phase</th>
+                            <th>Model Architecture</th>
+                            <th>Macro AUC (Mean)</th>
+                            <th>Macro F1-Score</th>
+                            <th>Precision</th>
+                            <th>Recall</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>CheXNet (Baseline)</td>
+                            <td>P1</td>
+                            <td>CheXNet Baseline (224)</td>
                             <td>0.843</td>
-                            <td>Average</td>
+                            <td>0.144</td>
+                            <td>0.298</td>
+                            <td>0.112</td>
                         </tr>
                         <tr>
+                            <td>P2</td>
                             <td>Novel Hybrid (224)</td>
                             <td>0.866</td>
-                            <td>Advanced</td>
+                            <td>0.234</td>
+                            <td>0.452</td>
+                            <td>0.185</td>
                         </tr>
                         <tr>
+                            <td>P3</td>
                             <td>Novel Hybrid (384)</td>
                             <td>0.869</td>
-                            <td>High-Precision</td>
+                            <td>0.248</td>
+                            <td>0.512</td>
+                            <td>0.201</td>
                         </tr>
-                        <tr style="color: var(--secondary); font-weight: bold;">
+                        <tr style="background: rgba(99, 102, 241, 0.1); font-weight: bold; color: var(--primary);">
+                            <td>P4</td>
                             <td>Optimized Hybrid (384)</td>
                             <td>0.884</td>
-                            <td>State-of-the-Art 🏆</td>
+                            <td>0.278</td>
+                            <td>0.543</td>
+                            <td>0.232</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">
-                Our <strong>Optimized Hybrid</strong> model reached a score of <strong>0.884</strong>, which is
-                extremely high and shows it's consistent across multiple lung conditions.
-            </p>
         </section>
 
-        <!-- Visualization -->
-        <section class="card animate" style="animation-delay: 0.3s; border: 1px solid var(--secondary);">
-            <h2>Visualization: Grad-CAM 🔍</h2>
-            <p>
-                One big problem with AI is that it's often a "Black Box"—we don't know <em>why</em> it chose a certain
-                answer.
-                With <strong>Grad-CAM</strong>, we can see exactly where the AI is looking!
-            </p>
-
-            <div class="visual-box">
-                <p style="color: var(--secondary); margin-bottom: 1rem; font-weight: bold;">The "Heatmap" View</p>
-                <div
-                    style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 12px; border: 2px dashed var(--secondary);">
-                    AI Looking at... <span style="background: red; padding: 2px 8px; border-radius: 4px;">RED
-                        REGIONS</span> = Pathological shadow
-                </div>
+        <!-- Label-Wise Performance -->
+        <section class="card animate" style="animation-delay: 0.2s;">
+            <h2>Label-Wise Performance (AUC Comparison) 🔍</h2>
+            <p style="margin-bottom: 1.5rem;">Evaluating how each model performs on specific diseases. The <b>Optimized
+                    Hybrid</b> shows superior performance in complex cases like Emphysema and Cardiomegaly.</p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pathology</th>
+                            <th>Baseline (AUC)</th>
+                            <th>Novel 224 (AUC)</th>
+                            <th>Novel 384 (AUC)</th>
+                            <th style="color: var(--secondary);">Best Model (AUC)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="auc-body">
+                        <!-- Populated by JS -->
+                    </tbody>
+                    <tfoot style="background: rgba(99, 102, 241, 0.1); font-weight: bold;">
+                        <tr>
+                            <td>MEAN AUC (Macro)</td>
+                            <td>0.843</td>
+                            <td>0.866</td>
+                            <td>0.869</td>
+                            <td style="color: var(--secondary);">0.884</td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
+        </section>
 
-            <div class="analogy">
-                <label>Why it matters</label>
-                If the AI says "Pneumonia" but its Heatmap shows it was looking at the patient's shoulder bone, we know
-                the AI is wrong.
-                But if the Heatmap highlights the bottom of the lungs exactly where the doctor sees an infection, we can
-                <strong>Trust</strong> the AI.
+        <!-- Detailed Multi-Metrics for Best Model -->
+        <section class="card animate" style="animation-delay: 0.3s; border: 1px solid var(--primary);">
+            <h2 class="gradient-text">Detailed Measures: Best Model (Phase 4)</h2>
+            <p style="margin-bottom: 1.5rem;">Beyond AUC, we analyze <strong>F1, Precision, Recall, and
+                    Specificity</strong> to ensure the model is practical for clinical use.</p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pathology</th>
+                            <th>F1-Score</th>
+                            <th>Precision</th>
+                            <th>Recall</th>
+                            <th>Specificity</th>
+                        </tr>
+                    </thead>
+                    <tbody id="metrics-body">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Explanation of Metrics -->
+        <section class="card animate" style="animation-delay: 0.4s;">
+            <h3>Understanding the Terms 💡</h3>
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                <div class="analogy" style="margin: 0;">
+                    <label>AUC (The Grade)</label>
+                    Measures the general "intelligence" of the model. Higher is always better.
+                </div>
+                <div class="analogy" style="margin: 0; border-color: var(--primary);">
+                    <label>F1-Score (The Balance)</label>
+                    The balance between finding all diseases and being accurate about them.
+                </div>
+                <div class="analogy" style="margin: 0; border-color: #a855f7;">
+                    <label>Recall (The Safety)</label>
+                    How many actual sick people we caught. High recall = Fewer missed cases.
+                </div>
+                <div class="analogy" style="margin: 0; border-color: #f59e0b;">
+                    <label>Specificity (The Certainty)</label>
+                    How good we are at saying a healthy person is indeed healthy.
+                </div>
             </div>
         </section>
     </main>
 
+    <script>
+        const pathologies = [
+            ["Atelectasis", 0.840, 0.884, 0.881, 0.900, 0.405, 0.653, 0.294, 0.983],
+            ["Cardiomegaly", 0.897, 0.957, 0.956, 0.955, 0.343, 0.657, 0.232, 0.998],
+            ["Consolidation", 0.800, 0.805, 0.820, 0.835, 0.000, 0.000, 0.000, 1.000],
+            ["Edema", 0.891, 0.902, 0.877, 0.912, 0.087, 0.364, 0.049, 0.999],
+            ["Effusion", 0.886, 0.919, 0.916, 0.924, 0.516, 0.712, 0.404, 0.982],
+            ["Emphysema", 0.913, 0.935, 0.954, 0.963, 0.561, 0.632, 0.504, 0.992],
+            ["Fibrosis", 0.795, 0.830, 0.814, 0.856, 0.022, 0.250, 0.011, 0.999],
+            ["Hernia", 0.906, 0.825, 0.861, 0.923, 0.000, 0.000, 0.000, 1.000],
+            ["Infiltration", 0.753, 0.793, 0.778, 0.789, 0.266, 0.579, 0.173, 0.981],
+            ["Mass", 0.871, 0.904, 0.903, 0.893, 0.415, 0.721, 0.292, 0.996],
+            ["No Finding", 0.808, 0.838, 0.839, 0.849, 0.815, 0.817, 0.812, 0.733],
+            ["Nodule", 0.781, 0.837, 0.840, 0.844, 0.263, 0.500, 0.178, 0.991],
+            ["Pleural_Thickening", 0.819, 0.862, 0.840, 0.866, 0.015, 0.250, 0.008, 0.999],
+            ["Pneumonia", 0.797, 0.785, 0.833, 0.809, 0.000, 0.000, 0.000, 1.000],
+            ["Pneumothorax", 0.883, 0.915, 0.919, 0.939, 0.468, 0.587, 0.388, 0.992]
+        ];
+
+        const aucBody = document.getElementById('auc-body');
+        const metricsBody = document.getElementById('metrics-body');
+
+        pathologies.forEach(p => {
+            // Fill AUC Table
+            const row1 = `<tr>
+                <td style="font-weight:600">${p[0]}</td>
+                <td>${p[1].toFixed(3)}</td>
+                <td>${p[2].toFixed(3)}</td>
+                <td>${p[3].toFixed(3)}</td>
+                <td style="color:var(--secondary); font-weight:bold;">${p[4].toFixed(3)}</td>
+            </tr>`;
+            aucBody.innerHTML += row1;
+
+            // Fill Metrics Table
+            const row2 = `<tr>
+                <td style="font-weight:600">${p[0]}</td>
+                <td>${p[5].toFixed(3)}</td>
+                <td>${p[6].toFixed(3)}</td>
+                <td>${p[7].toFixed(3)}</td>
+                <td>${p[8].toFixed(3)}</td>
+            </tr>`;
+            metricsBody.innerHTML += row2;
+        });
+    </script>
+
     <footer>
-        <p>&copy; 2026 Med-AI Education Project. Data you can trust.</p>
+        <p>&copy; 2026 Med-AI Education Project. Comprehensive Performance Data.</p>
     </footer>
 </body>
 
