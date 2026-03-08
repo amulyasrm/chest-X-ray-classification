@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How AI Works | Med-AI Education</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+
+<body>
+    <nav>
+        <div class="container nav-content">
+            <a href="../index.html" class="logo">MED-AI EDUCATION</a>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="problem.html">The Challenge</a>
+                <a href="basics.html" class="active">How AI Works</a>
+                <a href="architecture.html">Our Model</a>
+                <a href="training.html">The Process</a>
+                <a href="results.html">Results</a>
+                <a href="future.html">Future</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" style="padding-top: 120px;">
+        <h1 class="animate">How does AI <span class="gradient-text">"See" Diseases?</span></h1>
+
+        <!-- Section 1: Neural Networks -->
+        <section class="card animate" style="animation-delay: 0.1s;">
+            <h2>1. The Neural Network 🧠</h2>
+            <p>
+                A Neural Network is like a <strong>digital brain</strong>. It is made of many layers.
+                Imagine a team of people sitting in a row. The first person looks at the image and spots simple stuff
+                (lines). They tell the next person, who looks for shapes (circles). This continues until the last person
+                says, "Oh, that shape looks like a lung disease!"
+            </p>
+        </section>
+
+        <!-- Section 2: CNN -->
+        <section class="card animate" style="animation-delay: 0.2s;">
+            <h2>2. Convolutional Neural Networks (CNN) 🔍</h2>
+            <p>
+                CNNs are the "Eyes" of AI. They are great at finding <strong>local textures</strong>.
+            </p>
+            <div class="analogy">
+                <label>How it works</label>
+                Imagine moving a magnifying glass over a picture. The glass (or <strong>Filter</strong>) looks for
+                specific patterns (like edges or dots).
+                The map of everywhere it found those patterns is called a <strong>Feature Map</strong>.
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+                <strong>Filters:</strong> Small boxes that scan for specific details.
+                <br>
+                <strong>Convolution:</strong> The act of scanning the image with these filters.
+            </p>
+        </section>
+
+        <!-- Section 3: Transformers -->
+        <section class="card animate" style="animation-delay: 0.3s;">
+            <h2>3. Transformers & Attention ✨</h2>
+            <p>
+                Transformers are a newer type of AI brain. While CNNs look through a magnifying glass, Transformers look
+                at the <strong>Whole Picture</strong> at once.
+            </p>
+            <h3>The Power of Attention</h3>
+            <p>
+                "Attention" is precisely what it sounds like. It's like a <strong>Flashlight</strong>.
+            </p>
+            <div class="analogy">
+                <label>The Flashlight Analogy</label>
+                If you are looking at a photo of a person in a forest, your brain uses "Attention" to focus on the
+                person and ignore the trees.
+                In our project, the AI uses "Attention" to shine a light on the lungs and ignore the patient's shoulders
+                or the background.
+            </div>
+        </section>
+
+        <!-- Section 4: Why Hybrid? -->
+        <section class="card animate" style="animation-delay: 0.4s; border: 1px solid var(--primary);">
+            <h2>4. Why Combine Them? (The Hybrid) 🤝</h2>
+            <p>
+                If you only use a CNN, you might see the details but miss the big picture.
+                If you only use a Transformer, you might see the big picture but miss the tiny details.
+                <br><br>
+                <strong>We combined them!</strong>
+                The CNN finds the fine textures of the disease, and the Transformer understands where the disease is
+                related to the rest of the body.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Med-AI Education Project. AI Simplified for Everyone.</p>
+    </footer>
+</body>
+
+</html>

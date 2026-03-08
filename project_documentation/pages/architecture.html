@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Model Architecture | Med-AI Education</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+</head>
+
+<body>
+    <nav>
+        <div class="container nav-content">
+            <a href="../index.html" class="logo">MED-AI EDUCATION</a>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="problem.html">The Challenge</a>
+                <a href="basics.html">How AI Works</a>
+                <a href="architecture.html" class="active">Our Model</a>
+                <a href="training.html">The Process</a>
+                <a href="results.html">Results</a>
+                <a href="future.html">Future</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" style="padding-top: 120px;">
+        <h1 class="animate">Inside the <span class="gradient-text">Hybrid Brain</span></h1>
+
+        <!-- Architecture Overview -->
+        <section class="card animate" style="animation-delay: 0.1s;">
+            <h2>The Workflow 🧬</h2>
+            <p>Here is exactly what happens once you upload an X-ray image to our system:</p>
+            <div class="mermaid">
+                graph TD
+                A[Start: Raw X-ray] --> B[1. CLAHE: Brightness Check]
+                B --> C[2. Resize: High Resolution]
+                C --> D1[3A. CNN: Texture Expert]
+                C --> D2[3B. Swin ViT: Global Expert]
+                D1 --> E[4. Attention: Focus Filter]
+                E --> F[5. Fusion: Combining Experts]
+                D2 --> F
+                F --> G[End: Disease Prediction]
+            </div>
+        </section>
+
+        <!-- Components Breakdown -->
+        <section class="card animate" style="animation-delay: 0.3s;">
+            <h2>Step-by-Step Components</h2>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                <div class="card" style="background: rgba(255,255,255,0.05);">
+                    <h3>1. CLAHE Preprocessing 🔦</h3>
+                    <p style="font-size: 0.9rem;">
+                        <strong>What it is:</strong> A digital "Contrast" filter.
+                        <br>
+                        <strong>Why we use it:</strong> Some X-rays are dark or blurry. CLAHE makes the faint details
+                        (like small shadows) stand out clearly so the AI doesn't miss them.
+                    </p>
+                </div>
+
+                <div class="card" style="background: rgba(255,255,255,0.05);">
+                    <h3>2. DenseNet CNN 🧬</h3>
+                    <p style="font-size: 0.9rem;">
+                        <strong>What it is:</strong> A very deep traditional AI eye.
+                        <br>
+                        <strong>Why we use it:</strong> It's been proven for years to be the best at finding patterns in
+                        medical images. We use it to extract "local" features.
+                    </p>
+                </div>
+
+                <div class="card" style="background: rgba(255,255,255,0.05);">
+                    <h3>3. Swin Transformer 🌐</h3>
+                    <p style="font-size: 0.9rem;">
+                        <strong>What it is:</strong> A modern Transformer that looks at the whole image.
+                        <br>
+                        <strong>Why we use it:</strong> It understands "Context." For example, it knows where the heart
+                        is versus the lungs, helping it categorize diseases more scientifically.
+                    </p>
+                </div>
+
+                <div class="card" style="background: rgba(255,255,255,0.05);">
+                    <h3>4. Spatial Attention 🔦</h3>
+                    <p style="font-size: 0.9rem;">
+                        <strong>What it is:</strong> A digital flashlight that points to lung regions.
+                        <br>
+                        <strong>Why we use it:</strong> It tells the CNN: "Hey, focus on the lungs, ignore the
+                        background noise!" This makes the AI much more accurate.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fusion Explanation -->
+        <section class="card animate" style="animation-delay: 0.5s;">
+            <h2>Feature Fusion: The Final Verdict 🤝</h2>
+            <p>
+                Think of <strong>Feature Fusion</strong> as a consultation between two expert doctors.
+                <br><br>
+                <strong>Doctor A (CNN)</strong> says: "I see a very specific rough texture here."
+                <br>
+                <strong>Doctor B (Transformer)</strong> says: "Based on the whole lung shape, that texture is likely an
+                infection."
+                <br><br>
+                By <strong>fusing</strong> (connecting) their opinions, our model makes a final, smarter decision on
+                whether a disease is present.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Med-AI Education Project. Complexity made Simple.</p>
+    </footer>
+</body>
+
+</html>

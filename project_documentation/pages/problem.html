@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Challenge | Med-AI Education</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+
+<body>
+    <nav>
+        <div class="container nav-content">
+            <a href="../index.html" class="logo">MED-AI EDUCATION</a>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="problem.html" class="active">The Challenge</a>
+                <a href="basics.html">How AI Works</a>
+                <a href="architecture.html">Our Model</a>
+                <a href="training.html">The Process</a>
+                <a href="results.html">Results</a>
+                <a href="future.html">Future</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" style="padding-top: 120px;">
+        <h1 class="animate">The <span class="gradient-text">Problem Statement</span></h1>
+
+        <section class="card animate" style="animation-delay: 0.2s;">
+            <h2>What is a Chest X-ray? 🦴</h2>
+            <p>
+                An X-ray is like a photograph of the inside of your body. When X-ray beams pass through you, they show
+                bones as white (because they are thick) and lungs as black (because they are full of air).
+            </p>
+            <h3>Why is it hard to detect diseases?</h3>
+            <p>
+                Diseases usually look like "shadows" or "fuzziness" in the lungs.
+                <br><br>
+                1. <strong>Visual Similarity:</strong> Many different diseases look almost exactly the same (a white
+                patch could be Pneumonia or it could be Cancer).
+                <br>
+                2. <strong>Subtle Features:</strong> Some diseases are tiny (like a Nodule) and can be easily missed.
+                <br>
+                3. <strong>Fatigue:</strong> After looking at 100 X-rays, even the best doctor's eyes can get tired.
+            </p>
+            <div class="analogy">
+                <label>The Challenge</label>
+                It's like playing "Where's Waldo," but Waldo is a transparent ghost hiding in a foggy city.
+            </div>
+        </section>
+
+        <section class="card animate" style="animation-delay: 0.4s;">
+            <h2>The Data: NIH ChestXray14 📊</h2>
+            <p>To teach our AI, we used one of the world's largest collections of medical images: the <strong>NIH
+                    ChestXray14</strong> dataset.</p>
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+                <div class="visual-box">
+                    <h1 class="gradient-text">112,000+</h1>
+                    <p>Total Images</p>
+                </div>
+                <div class="visual-box">
+                    <h1 class="gradient-text">30,000+</h1>
+                    <p>Unique Patients</p>
+                </div>
+                <div class="visual-box">
+                    <h1 class="gradient-text">14</h1>
+                    <p>Labeled Diseases</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card animate" style="animation-delay: 0.6s;">
+            <h2>The Secret Problem: Class Imbalance ⚖️</h2>
+            <p>
+                Imagine trying to learn about animals, but for every 100 cats you see, you only see 1 tiger. You'll
+                become an expert at cats but very bad at finding tigers!
+                <br><br>
+                This is <strong>Class Imbalance</strong>. In our dataset, "No Finding" (healthy) images are very common,
+                but rare diseases like "Hernia" are very hard to find. We have to design our AI specifically to pay
+                attention to these rare "tigers."
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Med-AI Education Project. Bridging Healthcare and Tech.</p>
+    </footer>
+</body>
+
+</html>
