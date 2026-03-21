@@ -23,6 +23,7 @@
                 <a href="architecture.html">Pipelines</a>
                 <a href="training.html">The Process</a>
                 <a href="results.html" class="active">Results</a>
+                <a href="dictionary.html">Dictionary</a>
                 <a href="future.html">Future</a>
             </div>
         </div>
@@ -84,6 +85,35 @@
                     </tbody>
                 </table>
             </div>
+        </section>
+
+        <!-- Loss Comparison Section -->
+        <section class="card animate" style="animation-delay: 0.15s; border-left: 5px solid var(--secondary);">
+            <h2>Scientific Deep Dive: Loss Function Comparison 🧪</h2>
+            <p style="margin-bottom: 1.5rem;">To optimize our Hybrid Model, we benchmarked two advanced loss functions
+                designed for imbalanced medical data. Our experiment on a 5,000-image subset revealed a clear winner.
+            </p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 1.5rem;">
+                <div class="card" style="background: rgba(255,255,255,0.03);">
+                    <h3 style="color: var(--primary);">Focal Loss</h3>
+                    <div style="font-size: 2rem; font-weight: 800; margin: 0.5rem 0;">0.7471 <span
+                            style="font-size: 1rem; color: var(--text-muted);">AUC</span></div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Down-weights easy examples but treats all
+                        negative labels with equal punishment gravity.</p>
+                </div>
+                <div class="card" style="background: rgba(212, 175, 55, 0.1); border: 1px solid var(--secondary);">
+                    <h3 style="color: var(--secondary);">Asymmetric Loss (Winner)</h3>
+                    <div style="font-size: 2rem; font-weight: 800; margin: 0.5rem 0;">0.7670 <span
+                            style="font-size: 1rem; color: var(--text-muted);">AUC</span></div>
+                    <p style="font-size: 0.85rem; color: #fdf6e3;">Enables "Asymmetric Focusing"—it allows the model to
+                        ignore very easy negative cases while focusing intensely on hard positive pathological markers.
+                    </p>
+                </div>
+            </div>
+            <p style="font-size: 0.9rem; font-style: italic;">Conclusion: Switching to <b>Asymmetric Loss</b> provided a
+                <b>~2.7% performance boost</b> in early experiments, leading to its selection for the final
+                high-resolution training.</p>
         </section>
 
         <!-- Label-Wise Performance -->

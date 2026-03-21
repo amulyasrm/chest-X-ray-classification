@@ -100,6 +100,46 @@
                     a holistic understanding of the patient's condition that neither branch could achieve alone.
                 </p>
             </div>
+            <div class="card">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">Horizontal Flip</h3>
+                <p style="font-size: 0.95rem; color: var(--text-muted); text-align: justify;">
+                    A data augmentation technique that mirrors the image left-to-right. In medical imaging, this is
+                    extremely effective because human anatomy is largely symmetric. By flipping an X-ray, we teach the
+                    model that a disease pattern in the right lung is functionally identical to the same pattern in the
+                    left lung, effectively doubling our pattern recognition data.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3 style="color: var(--secondary); margin-bottom: 1rem;">Random Rotation</h3>
+                <p style="font-size: 0.95rem; color: var(--text-muted); text-align: justify;">
+                    Randomly rotates the image by a small margin (e.g., ±10°). Real-world clinical scans are rarely
+                    perfectly aligned; patients may be slightly tilted or hunched. By training with random rotations, we
+                    ensure the model learns "invariant" features—identifying the disease based on its intrinsic shape
+                    rather than its absolute orientation in the frame.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3 style="color: #a855f7; margin-bottom: 1rem;">Color Jitter</h3>
+                <p style="font-size: 0.95rem; color: var(--text-muted); text-align: justify;">
+                    A technique where we slightly and randomly vary the brightness, contrast, and saturation of an image
+                    during training. Since X-ray machines across different hospitals have varying sensor qualities and
+                    exposure settings, Jitter helps the AI build "exposure resilience." It learns that the diagnostic
+                    signal is in the tissue density contrast, not the absolute brightness level of the scan.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3 style="color: #6366f1; margin-bottom: 1rem;">Patient-wise Splitting</h3>
+                <p style="font-size: 0.95rem; color: var(--text-muted); text-align: justify;">
+                    A critical data integrity strategy in medical AI. Since one patient often has multiple X-rays
+                    (longitudinal studies), a random image-wise split could put one image of Patient A in the training
+                    set and another image of the same patient in the test set. This leads to "Data Leakage" where the
+                    model simply recognizes the patient's anatomy instead of the disease. Patient-wise splitting ensures
+                    a patient's entire history is isolated to a single set, guaranteeing true generalization.
+                </p>
+            </div>
         </section>
     </main>
 

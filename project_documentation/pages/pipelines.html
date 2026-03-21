@@ -51,12 +51,13 @@
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;">
                 <div>
                     <p style="margin-bottom: 1rem;">The benchmark model. Follows the original Stanford CheXNet research,
-                        utilizing a standard DenseNet121 encoder.</p>
+                        utilizing a standard DenseNet121 encoder. It relies on standard imaging features with
+                        minimal pixel-level enhancement.</p>
                     <ul style="color: var(--text-muted); font-size: 0.9rem; margin-left: 1.5rem;">
-                        <li>Encoder: DenseNet121</li>
-                        <li>Resolution: 224x224px</li>
-                        <li>Parameters: ~7M</li>
-                        <li>Loss: BCEWithLogitsLoss</li>
+                        <li><strong>Preprocessing:</strong> Standard Bilinear Interpolation (224px).</li>
+                        <li><strong>Normalization:</strong> Zero-mean unit-variance (ImageNet).</li>
+                        <li><strong>Parameters:</strong> ~7M Weights.</li>
+                        <li><strong>Limitation:</strong> Susceptible to low-contrast signal loss in raw scans.</li>
                     </ul>
                 </div>
                 <div class="mermaid">

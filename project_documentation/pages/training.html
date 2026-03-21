@@ -22,6 +22,7 @@
                 <a href="architecture.html">Our Model</a>
                 <a href="training.html" class="active">The Process</a>
                 <a href="results.html">Results</a>
+                <a href="dictionary.html">Dictionary</a>
                 <a href="future.html">Future</a>
             </div>
         </div>
@@ -32,88 +33,154 @@
 
         <!-- Section 1: Preprocessing & Augmentation -->
         <section class="card animate" style="animation-delay: 0.1s;">
-            <h2>1. Preparing the Data 🥗</h2>
-            <p>
-                Just like an athlete needs good food, an AI needs clean data. We spend a lot of time "preparing" the
-                images.
+            <h2>1. Preparing the Data: Preprocessing & Augmentation 🥗</h2>
+            <p style="margin-bottom: 2rem;">
+                In medical imaging, raw data is often noisy, inconsistent, and low-contrast. Our data pipeline evolved
+                through four phases to ensure the model focuses on pathological markers rather than imaging artifacts.
             </p>
-            <h3>Augmentation: Training with Variations</h3>
-            <div class="analogy">
-                <label>The Mirror Analogy</label>
-                If you only see people standing up, you might not recognize someone lying down.
-                "Augmentation" means we take our X-ray images and randomly rotate them, flip them sideways, or change
-                their brightness.
-            </div>
-            <p>This trick helps the AI become "robust"—it learns to recognize a disease no matter how the patient was
-                positioned when the X-ray was taken.</p>
-        </section>
 
-        <!-- Section 2: Optimizer & Loss -->
-        <section class="card animate" style="animation-delay: 0.2s;">
-            <h2>2. The Learning Rule 🎓</h2>
-            <p>How does the AI actually "learn" from its mistakes?</p>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                <div>
-                    <h3>The Loss Function 📉</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">
-                        This is the AI's "Internal Scorecard." When the AI makes a wrong guess, the <strong>Loss
-                            Function</strong> gives it a high penalty score. The AI's goal is to make this score as low
-                        as possible.
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                <div class="card"
+                    style="background: rgba(255,255,255,0.05); border: 1px solid rgba(212, 175, 55, 0.3);">
+                    <h3 style="color: var(--secondary);">Data Preprocessing</h3>
+                    <p style="font-size: 0.9rem;">The "Cleaning" phase. Standardizing raw scans for model consumption.
                     </p>
+                    <ul style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">
+                        <li><strong>CLAHE (Novel/Optimized Only):</strong> Contrast Limited Adaptive Histogram
+                            Equalization. Used to sharpen lung textures and bone boundaries.</li>
+                        <li><strong>Normalization:</strong> Scaling pixel values based on ImageNet statistics (Mean:
+                            [0.485, 0.456, 0.406]) to stabilize training gradient.</li>
+                        <li><strong>Resolution Upscaling:</strong> Moving from 224px (Standard) to 384px (Optimized) to
+                            capture micro-nodules.</li>
+                    </ul>
                 </div>
-                <div>
-                    <h3>The Optimizer 🔧</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">
-                        Think of the <strong>Optimizer</strong> as a teacher. It looks at the penalty score and tells
-                        the AI precisely which "brain cells" (weights) need to change to do better next time. We use a
-                        teacher called <strong>AdamW</strong>.
-                    </p>
+                <div class="card"
+                    style="background: rgba(255,255,255,0.05); border: 1px solid rgba(212, 175, 55, 0.3);">
+                    <h3 style="color: var(--primary);">Data Augmentation</h3>
+                    <p style="font-size: 0.9rem;">The "Training" phase. Simulating clinical variations to increase
+                        robustness.</p>
+                    <ul style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">
+                        <li><strong>Random Rotation (±10°):</strong> Simulates variations in how a patient aligns with
+                            the X-ray plate.</li>
+                        <li><strong>Horizontal Flip:</strong> Doubles the dataset size and helps the model learn
+                            invariant features.</li>
+                        <li><strong>Color Jitter:</strong> Randomly adjusts brightness and contrast to simulate
+                            different X-ray machine exposures.</li>
+                    </ul>
                 </div>
             </div>
-        </section>
 
-        <!-- Section 3: Experiments -->
-        <section class="card animate" style="animation-delay: 0.3s; border-left: 5px solid var(--primary);">
-            <h2>3. Our Evolution (Experiments) 🧪</h2>
-            <p>We didn't get it right on the first try! We worked through four major versions:</p>
+            <div style="margin: 3rem 0; text-align: center;">
+                <h3 style="margin-bottom: 1rem;">Visualizing Our Augmentation Strategy</h3>
+                <img src="../assets/augmentation_examples.png" alt="Data Augmentation Visuals"
+                    style="max-width: 100%; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+            </div>
+
+            <h3>Pipeline Comparison Matrix</h3>
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>Phase</th>
-                            <th>Model Type</th>
-                            <th>What we changed</th>
-                            <th>Result</th>
+                            <th>Pipeline Stage</th>
+                            <th>Preprocessing Strategy</th>
+                            <th>Augmentation Level</th>
+                            <th>Target Resolution</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>1</td>
-                            <td>Baseline</td>
-                            <td>Simple 224px model</td>
-                            <td>Good start</td>
+                            <td><strong>Phase 1: Baseline</strong></td>
+                            <td>Standard Normalization</td>
+                            <td>None (Static)</td>
+                            <td>224 x 224</td>
                         </tr>
                         <tr>
-                            <td>2</td>
-                            <td>Hybrid 224</td>
-                            <td>Added Transformers</td>
-                            <td>Much better</td>
+                            <td><strong>Phase 2: Hybrid</strong></td>
+                            <td><strong>CLAHE</strong> + Normalization</td>
+                            <td>Light (Horizontal Flip)</td>
+                            <td>224 x 224</td>
                         </tr>
                         <tr>
-                            <td>3</td>
-                            <td>Hybrid 384</td>
-                            <td>Increased image size</td>
-                            <td>Very detailed</td>
+                            <td><strong>Phase 3: High-Res</strong></td>
+                            <td>CLAHE + Normalization</td>
+                            <td>Full (Rotate+Flip+Jitter)</td>
+                            <td>384 x 384</td>
                         </tr>
                         <tr>
-                            <td>4</td>
-                            <td>Optimized Hybrid</td>
-                            <td>Fixed data splitting issues</td>
-                            <td>Best Ever! 🏆</td>
+                            <td><strong>Phase 4: Optimized</strong></td>
+                            <td>Advanced CLAHE + 🚀 <strong>Patient Split</strong></td>
+                            <td>Full (Aggressive Jitter)</td>
+                            <td>384 x 384</td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </section>
+
+        <!-- Section 2: Optimizer & Loss -->
+        <section class="card animate" style="animation-delay: 0.2s;">
+            <h2>2. The Learning Rule & Loss Optimization 🎓</h2>
+            <p>How does the AI actually "learn" from its mistakes?</p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div>
+                    <h3>Focal Loss vs. BCE 📉</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">
+                        Standard <strong>Binary Cross Entropy (BCE)</strong> treats all mistakes equally. However, our
+                        dataset is imbalanced (more healthy images than diseased).
+                        Our optimized pipeline uses <strong>Focal Loss</strong>, which "down-weights" easy examples and
+                        forces the AI to focus on rare, difficult cases like Hernia or Fibrosis.
+                    </p>
+                </div>
+                <div>
+                    <h3>AdamW Optimizer 🔧</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">
+                        Think of the <strong>Optimizer</strong> as a teacher. We use <strong>AdamW</strong>, which
+                        features decoupled weight decay.
+                        This prevents the model from "overfitting" (memorizing) specific images and helps it generalize
+                        to new, unseen X-rays.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Failed Experiments -->
+        <section class="card animate" style="animation-delay: 0.3s; border-left: 5px solid #ef4444;">
+            <h2>3. Scientific Rigor: The "Failed" Experiments 🧪</h2>
+            <p style="margin-bottom: 1.5rem;">
+                In research, discovering what <em>doesn't</em> work is just as important as finding what does. After
+                reaching a highly competitive <strong>0.884 Macro AUC</strong> in Phase 4, we pushed the boundaries with
+                two advanced techniques, which ultimately proved our Phase 4 architecture was incredibly robust.
+            </p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div class="card" style="background: rgba(239, 68, 68, 0.05);">
+                    <h3 style="color: #ef4444;">Experiment 1: Asymmetric Loss</h3>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;"><strong>The Idea:</strong> Replace our standard
+                        loss function with a highly specialized Asymmetric Loss designed to heavily penalize misses on
+                        rare diseases (like Hernia).</p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem;"><strong>Why it
+                            failed:</strong> While it slightly improved detection on extremely complex diseases, it
+                        sacrificed performance on common ones (generalist vs. specialist trade-off), bringing the
+                        average AUC down to 0.853.</p>
+                </div>
+                <div class="card" style="background: rgba(239, 68, 68, 0.05);">
+                    <h3 style="color: #ef4444;">Experiment 2: Self-Supervised Learning (SimCLR)</h3>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;"><strong>The Idea:</strong> Train the AI on X-rays
+                        <em>without</em> any disease labels first, forcing it to just "understand" lung structure by
+                        comparing highly augmented cropped versions of the same scan.</p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem;"><strong>Why it
+                            failed:</strong> SimCLR-style contrastive learning requires massive batch sizes (512+) and
+                        huge epochs (100+) to converge effectively. On local research hardware, the standard supervised
+                        approach drastically outperformed it.</p>
+                </div>
+            </div>
+
+            <div class="analogy" style="margin-top: 2rem; border-color: var(--secondary);">
+                <label>The Takeaway</label>
+                Our <strong>Phase 4 (Hybrid BCE 384 with Patient-wise Splitting)</strong> remains the undefeated
+                champion of this project. It hit the "Diminishing Returns" wall perfectly—balancing computational
+                efficiency with maximum clinical accuracy.
             </div>
         </section>
     </main>
