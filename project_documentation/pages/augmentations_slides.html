@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Augmentation Methods (PPT Slides)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+        }
+
+        .slide {
+            height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            position: relative;
+            background-color: #ffffff;
+            border-bottom: 5px solid #ffcc00;
+        }
+
+        .slide.title-slide {
+            background-color: #ffcc00;
+            color: #1a1a1a;
+        }
+
+        .slide.section-slide {
+            background-color: #333333;
+            color: #ffcc00;
+        }
+
+        .slide-content {
+            width: 80%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: #1a1a1a;
+            border-left: 8px solid #ffcc00;
+            padding-left: 20px;
+            width: 100%;
+        }
+
+        .explanation {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            color: #555;
+            width: 100%;
+            font-weight: 300;
+        }
+
+        .image-comparison {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
+            gap: 40px;
+        }
+
+        .image-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #ffffec;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-top: 5px solid #ffcc00;
+        }
+
+        .image-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .image-box img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Title Slide -->
+    <div class="slide title-slide">
+        <div class="slide-content">
+            <h1>Data Augmentation Strategies</h1>
+            <p style="font-size: 1.5rem;">Chest X-Ray Classification Pipeline</p>
+        </div>
+        <div class="slide-number">1</div>
+    </div>
+
+    <!-- Section: Simple Augmentations -->
+    <div class="slide section-slide">
+        <div class="slide-content">
+            <h1>Simple Augmentation Methods</h1>
+            <p style="font-size: 1.5rem; color: #fff;">(Techniques Utilized in Our Optimized Pipeline)</p>
+        </div>
+        <div class="slide-number">2</div>
+    </div>
+
+    <!-- Simple 1 -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Random Rotation (10 Degrees)</h2>
+            <p class="explanation">Gently tilts the image slightly, mimicking natural variations in how a patient might stand against the X-Ray board.</p>
+            <div class="image-comparison">
+                <div class="image-box">
+                    <h3>Original X-Ray</h3>
+                    <img src="../../data_augmentations/original.png" alt="Original">
+                </div>
+                <div class="image-box">
+                    <h3>After Rotation</h3>
+                    <img src="../../data_augmentations/simple/1_Rotation.png" alt="Rotated">
+                </div>
+            </div>
+        </div>
+        <div class="slide-number">3</div>
+    </div>
+
+    <!-- Simple 2 -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Random Horizontal Flip</h2>
+            <p class="explanation">Flips the image across the vertical axis, creating a mirror image to help the model learn lateral lung symmetry without distorting organ shapes.</p>
+            <div class="image-comparison">
+                <div class="image-box">
+                    <h3>Original X-Ray</h3>
+                    <img src="../../data_augmentations/original.png" alt="Original">
+                </div>
+                <div class="image-box">
+                    <h3>After Horizontal Flip</h3>
+                    <img src="../../data_augmentations/simple/2_Horizontal_Flip.png" alt="Flipped">
+                </div>
+            </div>
+        </div>
+        <div class="slide-number">4</div>
+    </div>
+
+    <!-- Simple 3 -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Color Jitter (Brightness Adjustment)</h2>
+            <p class="explanation">Randomly brightens or darkens the image by 10% to simulate X-Rays taken with slightly different exposure strengths.</p>
+            <div class="image-comparison">
+                <div class="image-box">
+                    <h3>Original X-Ray</h3>
+                    <img src="../../data_augmentations/original.png" alt="Original">
+                </div>
+                <div class="image-box">
+                    <h3>After Color Jitter</h3>
+                    <img src="../../data_augmentations/simple/3_Color_Jitter.png" alt="Brightness Jitter">
+                </div>
+            </div>
+        </div>
+        <div class="slide-number">5</div>
+    </div>
+
+    <!-- Section: Harsh Augmentations -->
+    <div class="slide section-slide">
+        <div class="slide-content">
+            <h1>Harsh Augmentation Methods</h1>
+            <p style="font-size: 1.5rem; color: #fff;">(Extreme distortions avoided in our pipeline to preserve anatomy)</p>
+        </div>
+        <div class="slide-number">6</div>
+    </div>
+
+    <!-- Harsh 1 -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Random Erasing (Cutout)</h2>
+            <p class="explanation">Randomly blacks out a rectangular section of the image to force the model to look at the entire lung instead of memorizing one tiny feature.</p>
+            <div class="image-comparison">
+                <div class="image-box">
+                    <h3>Original X-Ray</h3>
+                    <img src="../../data_augmentations/original.png" alt="Original">
+                </div>
+                <div class="image-box">
+                    <h3>After Random Erasing</h3>
+                    <img src="../../data_augmentations/harsh/1_Random_Erasing.png" alt="Erased">
+                </div>
+            </div>
+        </div>
+        <div class="slide-number">7</div>
+    </div>
+
+    <!-- Harsh 2 -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Solarize</h2>
+            <p class="explanation">Inverts all pixel colors that are above a certain brightness threshold, creating a high-contrast, photo-negative appearance.</p>
+            <div class="image-comparison">
+                <div class="image-box">
+                    <h3>Original X-Ray</h3>
+                    <img src="../../data_augmentations/original.png" alt="Original">
+                </div>
+                <div class="image-box">
+                    <h3>After Solarize</h3>
+                    <img src="../../data_augmentations/harsh/2_Solarize.png" alt="Solarize">
+                </div>
+            </div>
+        </div>
+        <div class="slide-number">8</div>
+    </div>
+
+    <!-- Harsh 3 -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Elastic Transform</h2>
+            <p class="explanation">Warps and stretches the image as if it were printed on rubber, severely distorting the anatomical structure of the ribs and heart.</p>
+            <div class="image-comparison">
+                <div class="image-box">
+                    <h3>Original X-Ray</h3>
+                    <img src="../../data_augmentations/original.png" alt="Original">
+                </div>
+                <div class="image-box">
+                    <h3>After Elastic Transform</h3>
+                    <img src="../../data_augmentations/harsh/3_Elastic_Transform.png" alt="Elastic Transform">
+                </div>
+            </div>
+        </div>
+        <div class="slide-number">9</div>
+    </div>
+
+    <!-- Harsh 4 -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Gaussian Noise</h2>
+            <p class="explanation">Sprinkles random static "grain" across the entire image to simulate severe sensor noise or ultra-low quality X-ray machines.</p>
+            <div class="image-comparison">
+                <div class="image-box">
+                    <h3>Original X-Ray</h3>
+                    <img src="../../data_augmentations/original.png" alt="Original">
+                </div>
+                <div class="image-box">
+                    <h3>After Gaussian Noise</h3>
+                    <img src="../../data_augmentations/harsh/4_Gaussian_Noise.png" alt="Gaussian Noise">
+                </div>
+            </div>
+        </div>
+        <div class="slide-number">10</div>
+    </div>
+
+</body>
+</html>
